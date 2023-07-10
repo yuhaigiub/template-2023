@@ -1,0 +1,396 @@
+
+// COMMON 
+
+* {
+    box-sizing: border-box;
+    appearance: none;
+	-webkit-appearance: none;
+    -moz-appearance: none; 
+    text-decoration: none;
+    //touch-action: none;
+
+	&:focus {
+		outline: none;
+	}
+}
+
+.off {
+    &, &:hover {
+        filter: grayscale(100%);
+        pointer-events: none; 
+    }
+}
+
+html {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: #FDFDFD;
+
+    &.popup-opened {
+        & {
+            position: relative;
+            height: 100% !important;
+            overflow: hidden;
+            touch-action: none;
+            -ms-touch-action: none;
+        }
+    }
+}
+
+body {
+    font-family: var(--font-primary), var(--font-secondary), sans-serif;
+    line-height: var(--fontheight-primary);
+    font-size: var(--fontsize-primary);
+
+    width: 100%;
+    // height: 100vh;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    margin: 0;
+    padding: 0;
+    background: none;
+    // overflow: hidden;
+    // overflow-x: hidden;
+
+    &.popup-opened {
+        overflow: hidden;
+    }
+}
+
+.row {
+	@include dndFlexGrid($neat-grid); 
+}
+
+.wrapper {
+    width: var(--width-desktop);
+    // height: 100%;
+    transform-origin: top left; 
+	overflow-x: hidden;
+    overflow-y: auto;
+    @include grid-media($portrait) {
+        width: var(--width-mobile);
+    }
+
+    &__content {
+        overflow-x: hidden;
+        overflow-y: hidden;
+        width: var(--width-desktop);
+    }
+}
+
+// CONTAINER
+
+.container {
+	display: block;
+    margin: 0 auto;
+    width: var(--width-desktop-safe);
+    max-width: var(--maxwidth-desktop-safe);
+    @include grid-media($portrait) {
+        width: var(--width-mobile-safe);
+    }
+}
+
+// SPLITTING 
+
+hr.split {
+	margin: 0;
+    border: 0;
+    background: transparent; 
+
+    &--low {
+        height: 16px;
+    }
+    &--medium {
+        height: 24px;
+    }
+    &--high {
+        height: 32px;
+    }
+    &--giant {
+        height: 48px;
+    }
+}
+
+.section {
+    position: relative;
+    display: block;
+    width: var(--width-desktop);
+
+    @include grid-media($xs, $portrait) {
+        width: var(--width-mobile);
+    }
+
+    &__background {
+        display: block;
+        width: 100%;
+        // height: auto;
+        // position: absolute;
+        // top: 0px;
+        // left: 0px;
+
+        img, video {
+            width: 100%;
+            height: 100%;
+            // height: auto;
+            object-fit: cover;
+        }
+
+        img {
+        }
+
+        video {
+            position: absolute;
+            top: 0;
+        }
+    }
+    &__content {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    // 
+
+    &.autoHeight {
+        .section__background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+        }
+
+        .section__content {
+            display: block;
+            position: relative;
+        }
+    }
+
+    &--fixedHeight > &__background {
+        position: static;
+        display: block;
+        width: 100%;
+        height: 100%;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+
+            @include grid-media($xs, $portrait) {
+                height: auto;
+            }
+        }
+    }
+    &--fixedHeight > &__content {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+    }
+
+    &__overlay {
+        display: block;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        @include backgroundGradient(rgba(#000, 0) 20%, rgba(#000, .8) 100%);
+    }
+
+}
+
+// Quick toggle content HTML
+
+.desktop {
+    display: block !important;
+}
+.desktop-inline {
+    display: inline-block !important;
+}
+.desktop-flex {
+    display: flex !important;
+}
+.desktop-grid {
+    display: grid !important;
+}
+.mobile, .mobile-inline, .mobile-flex, .mobile-grid {
+    display: none !important;
+}
+
+@include grid-media($portrait) {
+    .desktop, .desktop-inline, .desktop-flex, .desktop-grid {
+        display: none !important;
+    }
+    .mobile {
+        display: block !important;
+    }
+    .mobile-inline {
+        display: inline-block !important;
+    }
+    .mobile-flex {
+        display: flex !important;
+    }
+    .mobile-grid {
+        display: grid !important;
+    }
+}
+
+
+// Support 
+
+.clearfix {
+    &:after { 
+        content: "";
+        clear: both;
+        display: table;
+    }
+}
+.ml-auto {
+    margin-left: auto;
+}
+.mr-auto {
+    margin-right: auto;
+} 
+.text-left {
+    text-align: left;
+    justify-content: flex-start !important;
+}
+.text-center {
+    text-align: center;
+    justify-content: center !important;
+}
+.text-right {
+    text-align: right;
+    justify-content: flex-end !important;
+}
+.flex {
+    display: flex;
+}
+.flex-wrap {
+    flex-wrap: wrap;
+}
+.flex-column {
+    flex-direction: column;
+}
+.flex-start {
+    justify-content: flex-start;
+}
+.flex-end {
+    justify-content: flex-end;
+}
+.flex-middle {
+    align-items: center;
+}
+
+.flex.column{
+    flex-direction: column;
+}
+.flex.space-between{
+    justify-content: space-between;
+}
+.flex.center{
+  
+    align-items: center;
+}
+.flex.wrap{
+    flex-wrap: wrap;
+}
+
+@include grid-media($portrait) {
+    .mobile-flex {
+        display: flex;
+    }
+    .mobile-flex-wrap {
+        flex-wrap: wrap;
+    }
+    .mobile-flex-column {
+        flex-direction: column;
+    }
+    .mobile-flex-start {
+        justify-content: flex-start;
+    }
+    .mobile-flex-end {
+        justify-content: flex-end;
+    }
+    .mobile-flex-middle {
+        align-items: center;
+    }
+    .mobile-flex.column{
+        flex-direction: column;
+    }
+    .mobile-flex.space-between{
+        justify-content: space-between;
+    }
+    .mobile-flex.center{
+      
+        align-items: center;
+    }
+    .mobile-flex.wrap{
+        flex-wrap: wrap;
+    }
+}
+
+
+.floating {
+    pointer-events: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+
+    z-index: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    * {
+        pointer-events: all;
+    }
+
+}
+
+.scrollwatch-pin {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1px;
+    height: 1px;
+    background: transparent;
+    pointer-events: none;
+}
+
+// Simple Animation
+
+@keyframes shine {
+    100% {
+        filter: brightness(120%);
+    }
+}
+
+@keyframes shine_scale {
+    100% {
+        filter: brightness(90%);
+        transform: scale(1.1);
+        transform-origin: center center;
+    }
+}
+
+@keyframes shine_move {
+    100% {
+        filter: brightness(110%);
+        transform: translateX(12px);
+    }
+}
+
+// fix fancybox
+
+.fancybox-active {
+    // height: auto !important;
+    height: 100% !important; // fix for fullpage swiper
+}

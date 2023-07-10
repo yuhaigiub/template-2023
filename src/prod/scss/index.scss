@@ -1,0 +1,13 @@
+// SETUP
+@import "../../setup/config";
+@import "../../setup/config_var";
+@import "./loader";
+
+// DEFAULT SETTINGS
+@import "../../setup/scss/mixins";
+@import "../../setup/scss/common"; 
+@import "../../setup/scss/easing";   
+@import "../../setup/scss/popup";   
+
+// ADMIN
+//@import "admin";

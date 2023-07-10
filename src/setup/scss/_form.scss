@@ -1,0 +1,366 @@
+.form-control {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 18px;
+
+
+    .error { 
+        position: absolute;
+        display: none;
+        padding: 6px;
+        background: #ff3333;
+        color: #fff;
+        font-weight: normal;
+        font-size: 11px;
+        // width: 100%;
+        top: 100%;
+        right: 0;
+        box-sizing: border-box;
+        z-index: 3;
+        border-radius: 4px;
+
+        &:before {
+            content: "";
+            display: block;
+            width: 0px;
+            height: 0px;
+            border-width: 3px;
+            border-style: solid;
+            border-color: transparent #ff3333 #ff3333 transparent;
+            position: absolute;
+            bottom: calc(100% - 3px);
+            right: 10px;
+            transform: rotate(225deg);
+        }
+    }
+
+    &--error {
+        .error {
+            display: inline-block;
+        }
+    }
+
+    .available {
+        position: absolute;
+        display: none;
+        right: 10px;
+        bottom: 8px;
+        .icon {
+            svg {
+                width: 20px;
+                height: 20px;
+            }
+        }
+    }
+
+    &--available {
+        .available {
+            display: block;
+        }
+    }
+
+    // FILE LOGO
+
+    input[type="file"] {
+        display: none;
+
+        & + label {
+            display: block;
+            border: 1px solid #CFCFCF;
+            box-sizing: border-box;
+            border-radius: 8px;
+            width: 130px;
+            height: 130px;
+            padding: 28px 18px;
+            cursor: pointer;
+
+            .label {
+                display: block;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 18px;
+                text-align: center;
+                color: $text-normal;
+                opacity: 0.7;
+                text-align: center;
+                margin-bottom: 22px;
+            }
+
+            .icon {
+                display: block;
+                text-align: center;
+                svg {
+                    height: 32px;
+                    width: auto;
+                }
+            }
+
+            & + .imageInput {
+                position: absolute;
+                z-index: -1;
+                top: 0;
+                left: 0;
+                width: 130px;
+                height: 130px;
+                border-radius: 8px;
+                overflow: hidden;
+
+                img {
+                    width: 130px;
+                    height: 130px;
+                    object-fit: cover;
+                }
+            }
+        }
+
+        &.active + label {
+            background: rgba(#000, .6);
+            opacity: 0;
+            transition: opacity .2s;
+
+            .label {
+                color: #fff;
+            }
+            .icon {
+                svg {
+                    path {
+                        fill: #fff;
+                    }
+
+                    path:nth-child(2), path:nth-child(3) {
+                        fill: #000;
+                    }
+                }
+            }
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    // TEXT 
+
+    input[type="text"] {
+        width: 100%;
+        order: 2;
+        background: #FFFFFF;
+        border: 1px solid #CFCFCF;
+        box-sizing: border-box;
+        border-radius: 8px;
+        height: 40px;
+        padding: 10px;
+
+        transition: border .2s;
+
+        &:focus {
+            border: 1px solid #2596E8;
+            box-shadow: 0 0 0 1px #2596E8;
+        }
+
+
+        & + label {
+            order: 1;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 18px;
+            color: rgba($text-normal, .7);
+            margin-bottom: 4px;
+        }
+    }
+
+    &--popup {
+        input[type="text"] {
+            background: none;
+            border: none;
+            border: 1px solid rgba(#fff, .5);
+            border-radius: 0;
+            color: #fff;
+            width: 100%;
+            height: 60px;
+            font-size: 20px;
+
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:active {
+                -webkit-font-size: 20px;
+                -webkit-animation-name: autofill;
+                -webkit-animation-fill-mode: both;
+                @-webkit-keyframes autofill {
+                    to {
+                        color: #fff;
+                        background: transparent;
+                    }
+                }
+            }
+
+            &:focus {
+                border: none;
+                border: 1px solid rgba(#ffd900, .9);
+                box-shadow: 0 0 0 1px #ffd900;
+            }
+
+            & + label {
+                order: 1;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 18px;
+                line-height: 24px;
+                color: rgba(#fff, .7);
+                margin-bottom: 4px;
+            }
+        }
+    }
+
+    // SELECT
+
+    select {
+
+        & + .select2 {
+            order: 2;
+            width: 100% !important;
+
+            // width: 100%;
+            .select2-selection {
+                background: #FFFFFF;
+                border: 1px solid #CFCFCF;
+                box-sizing: border-box;
+                border-radius: 8px;
+                height: 40px;
+                padding: 10px;
+    
+                transition: border .2s; 
+
+                &__rendered {
+                    line-height: 18px;
+                    color: $text-normal;
+                    padding: 0;
+                }
+
+                &__arrow {
+                    width: 15px;
+                    height: 10px;
+                    background: url(../svg/arrow-down.svg) 0 0 no-repeat;
+                    transition: transform .2s;
+                    position: absolute;
+                    top: calc(50% - 10px / 2);
+                    right: calc(10px + 5px / 2);
+                    b {
+                        display: none;
+                    }
+                }
+            }
+
+            &.select2-container {
+                &--open {
+                    .selection {
+                        .select2-selection {
+                            &__arrow {
+                                transform: rotate(180deg);
+                            }
+                        }
+                    }
+                }
+                &--focus {
+                    .selection {
+                        .select2-selection {
+                            border: 1px solid #2596E8;
+                            box-shadow: 0 0 0 1px #2596E8;
+                        }
+                    }
+                }
+            }
+
+
+            & + label {
+                order: 1;
+                font-style: normal;
+                font-weight: normal;
+                font-size: 14px;
+                line-height: 18px;
+                color: rgba($text-normal, .7);
+                margin-bottom: 4px;
+            }
+        }
+    }
+
+
+    // SUBMIT 
+
+
+
+    button {
+        width: 100%;
+        height: 60px;
+        color: #fff;
+        background: $background-main;
+        border: none;
+        font-weight: 800;
+        font-size: 22px;
+        line-height: 29px;
+        cursor: pointer;
+    }
+
+
+
+    &--popup {
+        button {
+            width: 690px;
+            height: 50px;
+            // color: #fff;
+            // background: rgba(#000, .2);
+            // border: 1px solid rgba(#fff, .5);
+            // transition: all .2s;
+
+            // font-weight: 300;
+            // font-size: 18px;
+            // line-height: 29px;
+            padding: 0 0px;
+            cursor: pointer;
+
+            &:hover {
+                filter: brightness(120%);
+            }
+            
+        }
+
+        .submit {
+            &-img {
+                display: block;
+                @include sprite($bt-dangky-form);
+            } 
+        }
+    }
+
+
+
+
+}
+
+
+
+// FORM LIBS
+
+
+.select2-results {
+    &__option {
+        padding: 10px !important;
+        color: $text-normal !important; 
+
+        &[aria-selected="true"] {
+            background: #fcfcfc !important;
+
+            &.select2-results__option--highlighted {
+                background: #eee !important;
+            }
+        }
+
+        &--highlighted  {
+            background: #eee !important;
+        }
+    }
+} 

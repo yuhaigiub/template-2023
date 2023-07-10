@@ -1,0 +1,31 @@
+{% import "../../setup/html/_macros.html.twig" as _macro %}
+
+{% spaceless %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Article </title>
+		<style id="global_fontFamily">
+			:root {
+				--font-primary: Barlow;
+				--font-secondary: Barlow;
+			}
+		</style>
+	</head>
+	<body class="">
+		
+		{# Main Components #}
+		{% include "./block/content-tab.html.twig" %}
+
+		{# Add - on scripts #}
+		{% include "../../setup/html/_livereload.html.twig" %}
+
+		<div style="display: none;">
+			<div id="font-picker-primary" class="font-picker"></div>
+			<div id="font-picker-secondary" class="font-picker"></div>
+		</div>
+	</body>
+</html>
+{% endspaceless %}

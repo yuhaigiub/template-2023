@@ -1,0 +1,34 @@
+@import "../setup/config";
+@import "bourbon-neat";
+
+// SETUP
+
+:root {
+	--width-desktop-safe: 1720px;
+	--maxwidth-desktop-safe: calc(100% - 20px * 2);
+	--width-mobile-safe: calc(100% - 20px * 2);
+	--width-desktop: 2000px;
+	--width-mobile: 768px;
+	--height-desktop: 1000px;
+	--height-mobile: 1000px;
+	//--font-primary: Barlow;
+	//--font-secondary: Barlow;
+	--fontsize-primary-desktop: 18px;
+	--fontsize-primary-mobile: 24px;
+	--fontheight-primary: 1.4;
+	--fontweight-heavy: 900;
+	--fontweight-bold: 700;
+	--fontweight-semibold: 600;
+	--fontweight-medium: 500;
+	--fontweight-normal: 400;
+	--fontweight-light: 300;
+}
+
+:root {
+	@include grid-media($landscape) {
+		--fontsize-primary: var(--fontsize-primary-desktop);
+	}
+	@include grid-media($portrait) {
+		--fontsize-primary: var(--fontsize-primary-mobile);
+	}
+}

@@ -1,0 +1,58 @@
+{% macro video(mp4, webm = "", attr = "") %}
+	<video width="1920" height="1080" preload="none" {{attr}}>
+		{% if mp4|length > 0 %}
+			<source src="{{mp4}}" type="video/mp4">
+		{% endif %}
+		{% if webm|length > 0 %}
+			<source src="{{webm}}" type="video/webm">
+		{% endif %}
+		Your browser does not support the video tag.
+	</video>
+{% endmacro %}
+
+{% macro image(desktop, mobile, type = "", lazyload = true) %}
+	{% set lazyClass = "" %}
+	{% set lazyPrefixSrc = "" %}
+	{% if lazyload %}
+		{% set lazyClass = "lazyload" %}
+		{% set lazyPrefixSrc = "data-" %}
+		{% if type == "swiper" %}
+			{% set lazyClass = "swiper-lazy" %}
+		{% endif %}
+	{% endif %}
+	{% if desktop|length > 0 %}
+		<img {{lazyPrefixSrc}}src="{{desktop}}" class="desktop {{lazyClass}}" alt="">
+	{% endif %}
+	{% if mobile|length > 0 %}
+		<img {{lazyPrefixSrc}}src="{{mobile}}" class="mobile {{lazyClass}}" alt="">
+	{% endif %}
+{% endmacro %}
+
+{% macro swiper_animation(animation_in = "", animation_out = "", delay = ".2s", speed_in = ".4s", speed_out = ".4s") %}
+	{% spaceless %}
+		data-swiper-animation="{{animation_in}}" 
+		data-duration="{{speed_in}}" 
+		data-delay="{{delay}}" 
+		data-swiper-out-animation="{{animation_out}}"
+		data-out-duration="{{speed_out}}"
+	{% endspaceless %}
+{% endmacro %}
+
+{% macro generateString(defaultString = "", len = 10) %}
+{% spaceless %}
+	{% if defaultString|length > 0 %}
+		{{defaultString}}
+	{% else %}
+		{% set randomString = [] %}
+		{% set alpha = 'abcdefghijklmnopqrstuvwxyz' %}
+		{% set numbers = '0123456789' %}
+
+		{% for i in 1..10 %}
+			{% set randomCharacter = random(alpha ~ alpha|upper ~ numbers ~ '-_') %}
+			{% set randomString = randomString|merge([randomCharacter]) %}
+		{% endfor %}
+		{% set randomString = randomString|join %}
+		{{ randomString }}
+	{% endif %}
+{% endspaceless %}
+{% endmacro %}
