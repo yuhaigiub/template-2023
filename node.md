@@ -12,6 +12,9 @@ template structures:
 
 ---
 
+
+---
+
 /src
 
 |---\_article
