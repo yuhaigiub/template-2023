@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const workList = {
-	collection: ["component1", "component2"],
+	collection: ["component"],
 };
 
 for (let [collection, components] of Object.entries(workList)) {
