@@ -2,45 +2,30 @@
 
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Website Platform</title>
-    <meta name="description" content="A Single Page Builder"/>
-    <meta property="og:title" content="Website Platform"/>
-    <meta property="og:description" content="A Single Page Builder"/>
-    <link rel="shortcut icon" href="assets/favicon-default.ico"/>
-    <meta property="og:image" content="assets/sharefb-default.jpg"/>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Website Platform</title>
+		<meta name="description" content="A Single Page Builder"/>
+		<meta property="og:title" content="Website Platform"/>
+		<meta property="og:description" content="A Single Page Builder"/>
+		<link rel="shortcut icon" href="assets/favicon-default.ico"/>
+		<meta property="og:image" content="assets/sharefb-default.jpg"/>
+	</head>
+	<body class="">
+		{% include "../../setup/html/_fbsdk.html.twig" %}
+		<div id="wrapper" class="wrapper wrapper--homepage scaleDesktop scaleMobile">
+			<div id="wrapperContent" class="wrapper__content">
+				{# import your components (blocks) here #}
+			</div>
+		</div>
 
-    <style id="global_fontFamily">
-        :root {
-            --font-primary: Barlow;
-            --font-secondary: Barlow;
-        }
-    </style>
-</head>
-<body class="">
-{% include "../../setup/html/_fbsdk.html.twig" %}
-<div id="wrapper" class="wrapper wrapper--homepage scaleDesktop scaleMobile">
-    <div id="wrapperContent" class="wrapper__content">
-        {% include "../../codm_vongquay1/ingame/ingame.html.twig" with {"blockIdPostFix": "_PkTzn"} %}
-        {% include "../../codm_vongquay1/popup_ingame/popup_ingame.html.twig" with {"blockIdPostFix": "_EtdsdsdPwF"} %}
-    </div>
-</div>
-
-<div id="floating" class="floating">
-</div>
-<div style="display: none;">
-    <div id="font-picker-primary" class="font-picker"></div>
-    <div id="font-picker-secondary" class="font-picker"></div>
-</div>
-<script>
-
-    // Init Promotion
-    var domain = '';
-    let sPoint = 100;
-</script>
-</body>
+		<div id="floating" class="floating"></div>
+		<div style="display: none;">
+			<div id="font-picker-primary" class="font-picker"></div>
+			<div id="font-picker-secondary" class="font-picker"></div>
+		</div>
+	</body>
 </html>
 
 {#

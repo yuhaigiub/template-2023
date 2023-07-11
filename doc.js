@@ -1,56 +1,57 @@
 /*
+NOTE:
 template structures:
---------------------
+__________________
 
 /src
-    |---_article
-    |   |---default
-    |   |   |---assets
-    |   |       |--default.scss
+    |____article
+    |   |___default
+    |   |   |___assets
+    |   |       |__default.scss
     |   |
-    |   |---index.scss
+    |   |___index.scss
     |
-    |---article
+    |___article
+    |   |
+    |___prod
+    |   |___assets
+    |   |   |___fonts ==> (put fonts here)
+    |   |
+    |   |___html
+    |   |   |___index.html.twig
+    |   |
+    |   |___js
+    |   |   |____adimin.js
+    |   |   |____blockBundles.js
+    |   |   |___index.js
+    |   |
+    |   |___scss
+    |   |   |____admin.scss
+    |   |   |____loader.scss
+    |   |   |___index.scss
+    |   |
+    |   |___index.js
     |
-    |---prod
-    |   |---assets
-    |   |   |---fonts ==> (put fonts here)
-    |   |
-    |   |---html
-    |   |   |---index.html.twig
-    |   |
-    |   |---js
-    |   |   |---_adimin.js
-    |   |   |---_blockBundles.js
-    |   |   |---index.js
-    |   |
-    |   |---scss
-    |   |   |---_admin.scss
-    |   |   |---_loader.scss
-    |   |   |---index.scss
-    |   |
-    |   |---index.js
-    |
-    |---${collection}
-    |   |---${block} ==> (we can have as many blocks as we want)
-    |       |---assets
-    |       |   |---images ==> (put images here)
+    |___${collection}
+    |   |___${block} ==> (we can have as many blocks as we want)
+    |       |___assets
+    |       |   |___images ==> (put images here)
     |       |
-    |       |---sprite ==> (put sprites here)
-    |       |---${block}.html.twig
-    |       |---${block}.js
-    |       |---${block}.scss
+    |       |___sprite ==> (put sprites here)
+    |       |___${block}.html.twig
+    |       |___${block}.js
+    |       |___${block}.scss
     |
-    |---setup
-        |---assets
+    |___setup
+        |___assets
         |
-        |---html
+        |___html
         |
-        |---js
+        |___js
         |
-        |---scss
+        |___scss
         |
-        |---config_var.scss
-        |---config.scss
-        |---config.js
+        |___config_var.scss
+        |___config.scss
+        |___config.js
 */

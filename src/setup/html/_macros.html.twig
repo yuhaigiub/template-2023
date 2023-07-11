@@ -1,3 +1,10 @@
+{# add template to quickly create
+	- video
+	- image
+	- swiper-animation
+#}
+
+
 {% macro video(mp4, webm = "", attr = "") %}
 	<video width="1920" height="1080" preload="none" {{attr}}>
 		{% if mp4|length > 0 %}

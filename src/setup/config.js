@@ -1,3 +1,5 @@
+// NOTE: modify these values based on the design and the project you're working on
+
 var config = {
 	widthTriggerScale: 9999,
 	widthDesktopSafe: 1720,

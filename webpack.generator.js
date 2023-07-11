@@ -21,7 +21,7 @@ const TerserPlugin = require("terser-webpack-plugin");
 
 //---- GENERATOR
 
-// modules that you want to externalized
+// NOTE: modules that you want to externalized (inject a script tag to load the library from an external CDN)
 var webpackCdnModules = [
 	{
 		name: "jquery",
@@ -90,32 +90,32 @@ var webpackCdnModules = [
 	},
 ];
 
-// generate a webpack build
+// NOTE: generate a webpack build
 const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 	const commonPlugin = [
-		// remove/clean your build folders
+		// NOTE: remove/clean your build folders
 		new CleanWebpackPlugin({
 			cleanStaleWebpackAssets: false,
 		}),
 
-		// live reload when running webpack --watch
+		// NOTE: live reload when running webpack --watch
 		new LiveReloadPlugin(),
 
-		// allow passing node.js env variables to the browser
+		// NOTE: allow passing node.js env variables to the browser
 		new webpack.DefinePlugin({
 			"process.env": {
 				NODE_ENV: JSON.stringify(process.env.NODE_ENV),
 			},
 		}),
 
-		// create css per js file
+		// NOTE: create css per js file
 		new MiniCssExtractPlugin({
 			filename: `${dir}.css`,
 			chunkFilename: `[id].${dir}.css`,
 			ignoreOrder: true,
 		}),
 
-		// copy files that already exist in /src to your build under ${dir}/assets
+		// NOTE: copy files that already exist in /src to your build under ${dir}/assets
 		new CopyWebpackPlugin([
 			{
 				from: path.resolve(__dirname, `src/setup/assets/test-api`),
@@ -128,10 +128,10 @@ const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 
 	let customPlugin = [...commonPlugin];
 
+	// NOTE:
 	// a collection can contains multiple blocks
-	// each block will have some dependencies (assets) located in /assets
-	// this code is used to bundle these asset into the build
 	Object.entries(collections).forEach(([collection_id, block_list]) => {
+		// NOTE: load dependencies in /assets to build folder
 		block_list.forEach((block_id) => {
 			customPlugin.push(
 				new CopyWebpackPlugin([
@@ -144,12 +144,12 @@ const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 				])
 			);
 
-			// create a sprite per block (to reduce the number of image requests)
+			// NOTE: create a sprite per block (to reduce the number of image requests)
 			customPlugin.push(makeCollectionSprite(collection_id, block_id));
 		});
 	});
 
-	// generate html based on a template
+	// NOTE: generate html based on a template (twig in this build)
 	fileNames.forEach((fileName) => {
 		customPlugin.push(
 			new HtmlWebpackPlugin({
@@ -159,7 +159,7 @@ const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 			})
 		);
 
-		// why duplicate here ?
+		// TODO: why duplicate here ?
 		switch (fileName) {
 			case "article":
 				customPlugin.push(
@@ -192,11 +192,11 @@ const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 				break;
 		}
 
-		// externalize from node_modules in development and a CDN in production
+		// NOTE: externalize from node_modules in development and a CDN in production
 		customPlugin.push(
 			new WebpackCdnPlugin({
 				modules: webpackCdnModules,
-				publicPath: "/platform", // publicPath !== "node_modules ???"
+				publicPath: "/platform", // TODO: publicPath !== "node_modules ???"
 			})
 		);
 	});
@@ -212,6 +212,7 @@ const pluginGenerator = (options, dir, fileNames = [], collections = []) => {
 
 // LOADER
 
+// NOTE: get a list of images and bundle them into a single sprite & create a scss _sprite
 const makeCollectionSprite = (pathRoot, pathSprite) =>
 	new SpritesmithPlugin({
 		src: {
@@ -233,6 +234,7 @@ const makeCollectionSprite = (pathRoot, pathSprite) =>
 		},
 	});
 
+// NOTE: load css/scss/sass files
 const styleLoader = (pathRoot) => {
 	return {
 		test: /\.(sa|sc|c)ss$/,
@@ -268,7 +270,7 @@ const styleLoader = (pathRoot) => {
 	};
 };
 
-// load asset files (images, videos, fonts, but no audio ????)
+// NOTE: load asset files (images, videos, fonts, but no audio ?)
 const fileLoader = (pathRoot) => {
 	return {
 		test: /\.(svg|png|jpe?g|gif|mp4|otf|eot|ttf|woff|woff2)$/,
@@ -303,7 +305,7 @@ const fileLoader = (pathRoot) => {
 	};
 };
 
-// use babel to load .js files
+// NOTE: use babel to load .js files (help when you want to write to old browsers or use experimental features)
 const scriptLoader = (pathRoot) => {
 	return {
 		test: /\.js$/,
@@ -314,7 +316,7 @@ const scriptLoader = (pathRoot) => {
 	};
 };
 
-// use twig.js to load .twig files
+// NOTE: use twig.js to load .twig files
 const twigLoader = (_) => {
 	return {
 		test: /\.twig$/,
@@ -329,21 +331,19 @@ const twigLoader = (_) => {
 
 module.exports = {
 	configGenerator: (options, dir, fileNames = [], collections = {}) => {
-		// console.log(options, dir, fileNames, spriteGroups);
 		return {
 			name: dir,
-			entry: [`./src/${dir}/index.js`],
+
 			devtool: options.mode === "production" ? "" : "source-map",
+
+			entry: [`./src/${dir}/index.js`],
+
 			output: {
 				filename: `./${dir}.bundle.js`,
 				path: path.resolve(__dirname, `${dir}`),
 				publicPath: `./`,
 			},
-			// externals: {
-			//     "jquery": "jquery",
-			//     "jQuery": "jquery",
-			//     "lazysizes": "lazysizes"
-			// },
+
 			stats: {
 				// copied from `'minimal'`
 				all: false,
@@ -355,9 +355,12 @@ module.exports = {
 				moduleTrace: true,
 				errorDetails: true,
 			},
+
 			module: {
+				// NOTE: how to load files
 				rules: [fileLoader(dir), twigLoader(dir), scriptLoader(dir), styleLoader(dir)],
 			},
+
 			optimization: {
 				minimizer: [new TerserPlugin(), new CssMinimizerPlugin()],
 				splitChunks: {
@@ -370,8 +373,12 @@ module.exports = {
 					},
 				},
 			},
+
+			// NOTE: extra plugins
 			plugins: pluginGenerator(options, dir, fileNames, collections),
+
 			node: {
+				// NOTE: polyfill Node.js modules (avoid crashing when running on old browsers)
 				fs: "empty",
 			},
 		};
