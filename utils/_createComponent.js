@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 
+// change this part to create different blocks according to your need
 const workList = {
 	collection: ["component"],
 };
@@ -20,17 +21,16 @@ const htmlTemplate = `{% spaceless %}
 		</div>
 	</section>
 {% endspaceless %}
-`
+`;
 
+// main loop
 for (let [collection, components] of Object.entries(workList)) {
-	components.map((component) => {
-		createCollection(collection, component);
-	});
+	components.map((component) => createCollection(collection, component));
 }
 
 function createCollection(collectionId, componentId) {
-	const prefix = path.resolve(__dirname, "src");
-
+	const prefix = path.resolve(__dirname, "../src");
+	// if the collection doesn't exist then create it
 	if (!fs.existsSync(path.resolve(prefix, collectionId))) {
 		fs.mkdirSync(path.resolve(prefix, collectionId));
 
@@ -47,6 +47,7 @@ function createCollection(collectionId, componentId) {
 		});
 	}
 
+	// if the component already exist then don't create anything new
 	const componentDir = path.resolve(prefix, `${collectionId}/${componentId}`);
 	if (!fs.existsSync(componentDir)) {
 		fs.mkdirSync(componentDir);
@@ -55,16 +56,29 @@ function createCollection(collectionId, componentId) {
 		return;
 	}
 
+	// create collection's asset folders
 	fs.mkdirSync(path.resolve(componentDir, `assets`));
 	fs.mkdirSync(path.resolve(componentDir, `assets/images`));
 	fs.mkdirSync(path.resolve(componentDir, `sprite`));
 
-	["html.twig", "scss", "js"].map((ext) => {
+	// let git tracks empty folders
+	fs.appendFile(path.resolve(componentDir, `assets/.gitkeep`), "", logError);
+	fs.appendFile(path.resolve(componentDir, `assets/images/.gitkeep`), "", logError);
+	fs.appendFile(path.resolve(componentDir, `sprite/.gitkeep`), "", logError);
+
+	[
+		// create html, css, js file
+		("html.twig", "scss", "js"),
+	].map((ext) => {
 		const filePath = path.resolve(componentDir, `${componentId}.${ext}`);
-		let content = ""
-		if (ext === 'html.twig') content = htmlTemplate; 
-		fs.appendFile(filePath, content, function (err) {
-			if (err) console.log(err.message);
-		});
+		let content = "";
+		if (ext === "html.twig") content = htmlTemplate;
+		fs.appendFile(filePath, content, logError);
 	});
+}
+
+function logError(err) {
+	if (err) {
+		console.log(err.message);
+	}
 }
