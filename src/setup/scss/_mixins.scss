@@ -5,10 +5,13 @@
 // }
 
 @mixin backgroundGradient($direction: to bottom, $gradients...) {
-	background: nth($gradients, 1);  /* fallback for old browsers */
-	background: -webkit-linear-gradient( $direction, $gradients);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient( $direction, $gradients); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-} 
+	background: nth($gradients, 1); /* fallback for old browsers */
+	background: -webkit-linear-gradient($direction, $gradients); /* Chrome 10-25, Safari 5.1-6 */
+	background: linear-gradient(
+		$direction,
+		$gradients
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
 
 @mixin textGradient($from, $to, $direction: to bottom) {
 	@include backgroundGradient($from, $to, $direction);
@@ -17,9 +20,12 @@
 }
 
 @mixin backgroundRadialGradient($direction: to bottom, $gradients...) {
-	background: nth($gradients, 1);  /* fallback for old browsers */
-	background: -webkit-radial-gradient( $direction, $gradients);  /* Chrome 10-25, Safari 5.1-6 */
-	background: radial-gradient( $direction, $gradients); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: nth($gradients, 1); /* fallback for old browsers */
+	background: -webkit-radial-gradient($direction, $gradients); /* Chrome 10-25, Safari 5.1-6 */
+	background: radial-gradient(
+		$direction,
+		$gradients
+	); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 @mixin pseudoMarkup() {
@@ -45,18 +51,12 @@
 }
 
 @mixin textBorder($width, $color) {
-	text-shadow: #{$width} 0 0 $color, 
-				#{-1 * $width} 0 0 $color, 
-				0 #{$width} 0 $color, 
-				0 #{-1 * $width} 0 $color, 
-				#{$width} #{$width} 0 $color, 
-				#{-1 * $width} #{-1 * $width} 0 $color, 
-				#{-1 * $width} #{$width} 0 $color, 
-				#{$width} #{-1 * $width} 0 $color, 
-				#{calc(1/2) * $width} #{ calc(1/2) * $width} 0 $color,
-				#{calc(-1/2) * $width} #{calc(-1/2) * $width} 0 $color,
-				#{calc(1/2) * $width} #{calc(-1/2) * $width} 0 $color,
-				#{calc(-1/2) * $width} #{calc(1/2) * $width} 0 $color;
+	text-shadow: #{$width} 0 0 $color, #{-1 * $width} 0 0 $color, 0 #{$width} 0 $color, 0 #{-1 * $width} 0 $color,
+		#{$width} #{$width} 0 $color, #{-1 * $width} #{-1 * $width} 0 $color, #{-1 * $width} #{$width} 0 $color,
+		#{$width} #{-1 * $width} 0 $color, #{calc(1 / 2) * $width} #{calc(1 / 2) * $width} 0 $color,
+		#{calc(-1 / 2) * $width} #{calc(-1 / 2) * $width} 0 $color,
+		#{calc(1 / 2) * $width} #{calc(-1 / 2) * $width} 0 $color,
+		#{calc(-1 / 2) * $width} #{calc(1 / 2) * $width} 0 $color;
 }
 
 @mixin defaultHover() {
@@ -67,10 +67,11 @@
 	}
 }
 
-@mixin fullSize($display: block){
+@mixin fullSize($display: block) {
 	display: $display;
 	position: absolute;
-	width: 100%; height: 100%;
+	width: 100%;
+	height: 100%;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -86,38 +87,42 @@
 	vertical-align: middle;
 }
 
-@mixin image($type: '', $sprite: '') {
-	@if $type == 'full' {
+@mixin image($type: "", $sprite: "") {
+	@if $type == "full" {
 		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-	} @else if $type == 'button' {
+	} @else if $type == "button" {
 		display: block;
 		font-size: 0px;
 		background-repeat: no-repeat;
 		background-position: center center;
-	} @else if $type == 'button-text' {
+	} @else if $type == "button-text" {
 		@include superCenter();
 		background-repeat: no-repeat;
 		background-position: center center;
-	} @else if $type == 'sprite' {
+	} @else if $type == "sprite" {
 		display: block;
 		font-size: 0px;
 		@include sprite($sprite);
-	} @else if $type == 'sprite-text' {
+	} @else if $type == "sprite-text" {
 		@include sprite($sprite);
 		display: flex;
 		@include superCenter();
-	} 
+	}
 }
 
 @mixin dndGrid($neat-config) {
 	@include grid-container;
-	@include grid-collapse($neat-config); 
+	@include grid-collapse($neat-config);
 	width: initial;
 
-	.col-xs, .col-sm, .col-md, .col-lg, .col-xl {
+	.col-xs,
+	.col-sm,
+	.col-md,
+	.col-lg,
+	.col-xl {
 		&-0 {
 			// display: none;
 		}
@@ -132,7 +137,7 @@
 	}
 
 	@include grid-media($sm) {
-		@for $i from 1 through 12 { 
+		@for $i from 1 through 12 {
 			& > .col-sm-#{$i} {
 				@include grid-column($i, $neat-config);
 			}
@@ -144,7 +149,7 @@
 			& > .col-md-#{$i} {
 				@include grid-column($i, $neat-config);
 			}
-		} 
+		}
 	}
 
 	@include grid-media($lg) {
@@ -168,7 +173,7 @@
 	@for $i from 1 through 12 {
 		& > .col-#{$i} {
 			@include grid-column($i, $neat-config);
-		} 
+		}
 	}
 
 	@include grid-media($portrait) {
@@ -178,7 +183,6 @@
 			}
 		}
 	}
-
 
 	//------
 
@@ -191,7 +195,7 @@
 	}
 
 	@include grid-media($sm) {
-		@for $i from 1 through 12 { 
+		@for $i from 1 through 12 {
 			& > .col-sm-push-#{$i} {
 				@include grid-push($i, $neat-config);
 			}
@@ -224,23 +228,22 @@
 }
 
 @mixin dndFlexGrid($neat-config) {
-    // position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  width: 100%;
-
+	// position: relative;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
 
 	$maxCol: 12;
 	@for $i from 1 through $maxCol {
 		& > .col-#{$i} {
 			padding: 0 10px;
-			flex-basis: (calc(100 / ($maxCol / $i) )) * 1%;
-			max-width:  (calc(100 / ($maxCol / $i) ) ) * 1%;
+			flex-basis: (calc(100 / ($maxCol / $i))) * 1%;
+			max-width: (calc(100 / ($maxCol / $i))) * 1%;
 		}
 		& > .col-offset-#{$i} {
 			padding: 0 10px;
-        	margin-left: (calc(100 / ($maxCol / $i) ) ) * 1%;
-			max-width:  (calc(100 / ($maxCol / $i) ) ) * 1%;
+			margin-left: (calc(100 / ($maxCol / $i))) * 1%;
+			max-width: (calc(100 / ($maxCol / $i))) * 1%;
 		}
 	}
 
@@ -248,27 +251,23 @@
 		@for $i from 1 through $maxCol {
 			& > .col-mobile-#{$i} {
 				padding: 0 10px;
-				flex-basis: (calc(100 / ($maxCol / $i) ) ) * 1%;
-				max-width:  (calc(100 / ($maxCol / $i) ) ) * 1%;
+				flex-basis: (calc(100 / ($maxCol / $i))) * 1%;
+				max-width: (calc(100 / ($maxCol / $i))) * 1%;
 			}
 			& > .col-mobile-offset-#{$i} {
 				padding: 0 10px;
-				margin-left: (calc(100 / ($maxCol / $i) ) ) * 1%;
-				max-width:  (calc(100 / ($maxCol / $i) ) ) * 1%;
+				margin-left: (calc(100 / ($maxCol / $i))) * 1%;
+				max-width: (calc(100 / ($maxCol / $i))) * 1%;
 			}
 		}
 	}
-
 }
 
-
 @mixin scrollBar($bgColor, $thumbColor) {
-	
 	&::-webkit-scrollbar {
 		margin-right: 6px;
 		width: 6px;
-		transition: width .2s;
-
+		transition: width 0.2s;
 	}
 
 	&:hover {
@@ -276,19 +275,19 @@
 			width: 6px;
 		}
 	}
-	
+
 	/* Track */
 	&::-webkit-scrollbar-track {
-		background: rgba($bgColor, .5); 
+		background: rgba($bgColor, 0.5);
 	}
-	
+
 	/* Handle */
 	&::-webkit-scrollbar-thumb {
-		background: rgba($thumbColor, 1); 
+		background: rgba($thumbColor, 1);
 	}
-	
+
 	/* Handle on hover */
 	&::-webkit-scrollbar-thumb:hover {
-		background: rgba($thumbColor, 1); 
+		background: rgba($thumbColor, 1);
 	}
 }

@@ -1,5 +1,5 @@
-@import "../setup/config";
-@import "bourbon-neat";
+@use "../setup/config";
+@use "bourbon-neat" as bb;
 
 // SETUP
 
@@ -25,10 +25,10 @@
 }
 
 :root {
-  @include grid-media($landscape) {
+  @include bb.grid-media(config.$landscape) {
     --fontsize-primary: var(--fontsize-primary-desktop);
   }
-  @include grid-media($portrait) {
+  @include bb.grid-media(config.$portrait) {
     --fontsize-primary: var(--fontsize-primary-mobile);
   }
 }
