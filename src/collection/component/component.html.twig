@@ -1,0 +1,15 @@
+{% spaceless %}
+{% set blockId = blockId|default("component_id") %}
+{% set blockIdPostFix = blockIdPostFix|default("") %}
+	<section id="{{ blockId }}{{ blockIdPostFix }}" class="section section--{{ blockId }} {{ blockId }} scrollFrame" data-block-id="{{ blockId }}">
+		<div class="section__background">
+			{# NOTE: add background images and video here #}
+			<span id="{{ blockId }}{{ blockIdPostFix }}-scrollwatch-pin" class="scrollwatch-pin"></span>
+		</div>
+		<div class="section__content">
+			<div class="inner inner--{{ blockId }}">
+				{# NOTE: add component's content here #}
+			</div>
+		</div>
+	</section>
+{% endspaceless %}

@@ -6,6 +6,8 @@ const workList = {
 	collection: ["component"],
 };
 
+//-------------------------------------------------------------------
+
 const htmlTemplate = `{% spaceless %}
 {% set blockId = blockId|default("component_id") %}
 {% set blockIdPostFix = blockIdPostFix|default("") %}
@@ -22,11 +24,6 @@ const htmlTemplate = `{% spaceless %}
 	</section>
 {% endspaceless %}
 `;
-
-// main loop
-for (let [collection, components] of Object.entries(workList)) {
-	components.map((component) => createCollection(collection, component));
-}
 
 function createCollection(collectionId, componentId) {
 	const prefix = path.resolve(__dirname, "../src");
@@ -66,10 +63,9 @@ function createCollection(collectionId, componentId) {
 	fs.appendFile(path.resolve(componentDir, `assets/images/.gitkeep`), "", logError);
 	fs.appendFile(path.resolve(componentDir, `sprite/.gitkeep`), "", logError);
 
-	[
-		// create html, css, js file
-		("html.twig", "scss", "js"),
-	].map((ext) => {
+	// create html, css, js file
+	const filesExtensions = ["html.twig", "scss", "js"];
+	filesExtensions.map((ext) => {
 		const filePath = path.resolve(componentDir, `${componentId}.${ext}`);
 		let content = "";
 		if (ext === "html.twig") content = htmlTemplate;
@@ -81,4 +77,9 @@ function logError(err) {
 	if (err) {
 		console.log(err.message);
 	}
+}
+
+// main loop
+for (let [collection, components] of Object.entries(workList)) {
+	components.map((component) => createCollection(collection, component));
 }
