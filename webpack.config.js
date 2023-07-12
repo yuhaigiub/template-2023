@@ -9,10 +9,10 @@ configGenerator(options, dir="", fileNames=[], collections={collection_id: block
 */
 
 module.exports = (env, options) => [
-    configGenerator(options, 'prod', ['index'], {
-        collection: ["component"]
-    }),
-    configGenerator(options, 'article', ['index'], {
-        _article: ["default"]
-    })
+	configGenerator(options, "prod", ["index"], {
+		collection: ["component"],
+	}),
+	configGenerator(options, "article", ["index"], {
+		_article: ["default"],
+	}),
 ];

@@ -25,6 +25,29 @@ const htmlTemplate = `{% spaceless %}
 {% endspaceless %}
 `;
 
+const scssTemplate = `@import "../index.scss";\n@import "./sprites";
+
+.component_id {
+	@include grid-media($portrait) {
+		&,
+		.section__background,
+		.section__content,
+		.inner {
+			height: 1080px;
+		}
+	}
+
+	@include grid-media($landscape) {
+		&,
+		.section__background,
+		.section__content,
+		.inner {
+			height: 1080px;
+		}
+	}
+}
+`
+
 function createCollection(collectionId, componentId) {
 	const prefix = path.resolve(__dirname, "../src");
 	// if the collection doesn't exist then create it
@@ -33,7 +56,7 @@ function createCollection(collectionId, componentId) {
 
 		fs.appendFile(
 			path.resolve(prefix, `${collectionId}/index.scss`),
-			`@import "../setup/config";\n@import "bourbon-neat";\n@import "../setup/scss/mixins";\n@import "../setup/scss/easing;`,
+			`@import "../setup/config";\n@import "bourbon-neat";\n@import "../setup/scss/mixins";\n@import "../setup/scss/easing";`,
 			function (err) {
 				if (err) console.log(err.message);
 			}
@@ -69,6 +92,7 @@ function createCollection(collectionId, componentId) {
 		const filePath = path.resolve(componentDir, `${componentId}.${ext}`);
 		let content = "";
 		if (ext === "html.twig") content = htmlTemplate;
+		else if (ext === "scss") content = scssTemplate;
 		fs.appendFile(filePath, content, logError);
 	});
 }
